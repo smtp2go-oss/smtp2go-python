@@ -1,6 +1,11 @@
+import os
 import requests
 
 from settings import API_ROOT, ENDPOINT_SEND
+
+
+class SMTP2GoException(Exception):
+    pass
 
 
 class SMTP2Go:
@@ -9,8 +14,8 @@ class SMTP2Go:
 
     Usage:
 
-    # Pass API key to constructor:
-    s = SMTP2Go('api-526EA362E1E6AAD9F23C91C88F4E')
+    # Ensure API key environment variable is set:
+    s = SMTP2Go()
 
     s.send(sender='goofy@clubhouse.com',
                   recipients=['mickey@clubhouse.com'],
@@ -22,8 +27,11 @@ class SMTP2Go:
     SMTP2GoResponse() instance
     """
 
-    def __init__(self, api_key):
-        self.api_key = api_key
+    def __init__(self):
+        self.api_key = os.getenv('SMTP2GO_API_KEY', None)
+        if not self.api_key:
+            raise SMTP2GoException(
+                'SMTP2Go requires an API key Environment Variable to be set')
 
     def send(self, sender, recipients, subject, message, **kwargs):
         payload = {

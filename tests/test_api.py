@@ -5,7 +5,8 @@ from smtp2go import SMTP2Go
 
 
 @responses.activate
-def test_successful_endpoint_send():
+def test_successful_endpoint_send(monkeypatch):
+    monkeypatch.setenv('SMTP2GO_API_KEY', 'testkey')
     # Mock out API Endpoint:
     successful_response = {
         "request_id": "aa253464-0bd0-467a-b24b-6159dcd7be60",
@@ -20,7 +21,7 @@ def test_successful_endpoint_send():
                   json=successful_response, status=http_return_code,
                   content_type='application/json')
 
-    s = SMTP2Go('api-526EA362EDAE11E6AAD9F23C91C88F4E')
+    s = SMTP2Go()
     resp = s.send(sender='goofy@clubhouse.com',
                   recipients=['mickey@clubhouse.com'],
                   subject='Trying out SMTP2Go',
@@ -33,7 +34,8 @@ def test_successful_endpoint_send():
 
 
 @responses.activate
-def test_failed_endpoint_send():
+def test_failed_endpoint_send(monkeypatch):
+    monkeypatch.setenv('SMTP2GO_API_KEY', 'testkey')
     # Mock out API Endpoint:
     failed_response = {
         "request_id": "aa253464-0bd0-467a-b24b-6159dcd7be60",
@@ -48,7 +50,7 @@ def test_failed_endpoint_send():
                   json=failed_response, status=http_return_code,
                   content_type='application/json')
 
-    s = SMTP2Go('api-526EA362EDAE11E6AAD9F23C91C88F4E')
+    s = SMTP2Go()
     resp = s.send(sender='goofy@clubhouse.com',
                   recipients=['mickey@clubhouse.com'],
                   subject='Trying out SMTP2Go',
