@@ -61,25 +61,39 @@ class SMTP2GoResponse:
         self.status_code = self._get_status_code()
         self.request_id = self._get_request_id()
 
-        logger.info(f'Success? {self.success}')
-        logger.info(f'Status Code: {self.status_code}')
-        logger.info(f'Success? {self.success}')
+        logger.info('Success? {0}'.format(self.success))
+        logger.info('Status Code: {0}'.format(self.status_code))
+        logger.info('Request ID: {0}'.format(self.request_id))
 
     def _success(self):
-        """Returns True if API call successful, False otherwise"""
+        """
+        Returns True if API call successful, False otherwise
+        """
         return bool(self.json.get('data').get('succeeded', False))
 
     def _get_errors(self):
+        """
+        Gets errors from HTTP response
+        """
         errors = self.json.get('data').get('error')
         if errors:
             logger.error(errors)
         return errors
 
     def _get_status_code(self):
+        """
+        Gets HTTP status code from HTTP response
+        """
         return self._response.status_code
 
     def _get_request_id(self):
+        """
+        Gets HTTP request ID from HTTP response
+        """
         return self.json.get('request_id')
 
     def json(self):
+        """
+        Gets JSON from HTTP response
+        """
         return self._response.json()
