@@ -65,7 +65,7 @@ def test_failed_endpoint_send(monkeypatch):
     assert resp.errors == failed_response.get('errors')
 
 
-def test_no_environment_variable_raises_API_exception():
-    assert os.getenv('SMTP2GO_API_KEY') == None
+def test_no_environment_variable_raises_api_exception():
+    assert os.getenv('SMTP2GO_API_KEY') is None
     with pytest.raises(SMTP2GoAPIKeyException):
-        s = SMTP2Go()
+        SMTP2Go()
