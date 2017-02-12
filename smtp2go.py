@@ -4,17 +4,10 @@ import os
 import requests
 
 from settings import API_ROOT, ENDPOINT_SEND
+from exceptions import SMTP2GoAPIKeyException
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
-
-
-class SMTP2GoBaseException(Exception):
-    pass
-
-
-class SMTP2GoAPIKeyException(SMTP2GoBaseException):
-    pass
 
 
 class SMTP2Go:
