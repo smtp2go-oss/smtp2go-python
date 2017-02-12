@@ -1,10 +1,19 @@
+import json
+import logging
 import os
 import requests
 
 from settings import API_ROOT, ENDPOINT_SEND
 
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
-class SMTP2GoException(Exception):
+
+class SMTP2GoBaseException(Exception):
+    pass
+
+
+class SMTP2GoAPIKeyException(SMTP2GoBaseException):
     pass
 
 
@@ -30,18 +39,19 @@ class SMTP2Go:
     def __init__(self):
         self.api_key = os.getenv('SMTP2GO_API_KEY', None)
         if not self.api_key:
-            raise SMTP2GoException(
-                'SMTP2Go requires an API key Environment Variable to be set')
+            raise SMTP2GoAPIKeyException(
+                'SMTP2Go requires SMTP2GO_API_KEY Environment Variable to be '
+                'set')
 
     def send(self, sender, recipients, subject, message, **kwargs):
-        payload = {
+        payload = json.dumps({
             'api_key': self.api_key,
             'sender': sender,
             'to': recipients,
             'subject': subject,
             'text_body': message
-        }
-        response = requests.post(API_ROOT + ENDPOINT_SEND, payload)
+        })
+        response = requests.post(API_ROOT + ENDPOINT_SEND, data=payload)
         return SMTP2GoResponse(response)
 
 
@@ -58,12 +68,19 @@ class SMTP2GoResponse:
         self.status_code = self._get_status_code()
         self.request_id = self._get_request_id()
 
+        logger.info(f'Success? {self.success}')
+        logger.info(f'Status Code: {self.status_code}')
+        logger.info(f'Success? {self.success}')
+
     def _success(self):
         """Returns True if API call successful, False otherwise"""
         return bool(self.json.get('data').get('succeeded', False))
 
     def _get_errors(self):
-        return self.json.get('data').get('errors')
+        errors = self.json.get('data').get('error')
+        if errors:
+            logger.error(errors)
+        return errors
 
     def _get_status_code(self):
         return self._response.status_code
