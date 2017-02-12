@@ -1,5 +1,8 @@
+import os
+import pytest
 import responses
 
+from exceptions import SMTP2GoAPIKeyException
 from settings import API_ROOT, ENDPOINT_SEND
 from smtp2go import SMTP2Go
 
@@ -60,3 +63,9 @@ def test_failed_endpoint_send(monkeypatch):
     assert resp.status_code == http_return_code
     assert resp.json == failed_response
     assert resp.errors == failed_response.get('errors')
+
+
+def test_no_environment_variable_raises_API_exception():
+    assert os.getenv('SMTP2GO_API_KEY') == None
+    with pytest.raises(SMTP2GoAPIKeyException):
+        s = SMTP2Go()
