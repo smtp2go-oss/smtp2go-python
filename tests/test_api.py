@@ -2,9 +2,9 @@ import os
 import pytest
 import responses
 
-from exceptions import SMTP2GoAPIKeyException
-from settings import API_ROOT, ENDPOINT_SEND
-from smtp2go import SMTP2Go
+from smtp2go.exceptions import SMTP2GoAPIKeyException
+from smtp2go.settings import API_ROOT, ENDPOINT_SEND
+from smtp2go.core import SMTP2Go
 
 
 @responses.activate

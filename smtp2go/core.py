@@ -3,8 +3,8 @@ import logging
 import os
 import requests
 
-from settings import API_ROOT, ENDPOINT_SEND
-from exceptions import SMTP2GoAPIKeyException
+from smtp2go.settings import API_ROOT, ENDPOINT_SEND
+from smtp2go.exceptions import SMTP2GoAPIKeyException
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 
 class SMTP2Go:
     """
-    Thin Python wrapper over customer API.
+    Thin Python wrapper over SMTP2Go API.
 
     Usage:
 
@@ -26,7 +26,7 @@ class SMTP2Go:
 
     Returns:
 
-    SMTP2GoResponse() instance
+    SMTP2GoResponse instance
     """
 
     def __init__(self):
