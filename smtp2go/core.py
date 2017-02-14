@@ -41,7 +41,7 @@ class SMTP2Go:
         if not self.api_key:
             raise SMTP2GoAPIKeyException(
                 'SMTP2Go requires SMTP2GO_API_KEY Environment Variable to be '
-                'set')
+                'set or api_key passed to the SMTP2Go constructor')
 
     def send(self, sender, recipients, subject, message, **kwargs):
         headers = {
