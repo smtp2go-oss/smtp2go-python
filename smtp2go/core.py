@@ -6,6 +6,8 @@ import requests
 from smtp2go.settings import API_ROOT, ENDPOINT_SEND
 from smtp2go.exceptions import SMTP2GoAPIKeyException
 
+__version__ = '0.0.1-alpha'
+
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
@@ -42,6 +44,10 @@ class SMTP2Go:
                 'set')
 
     def send(self, sender, recipients, subject, message, **kwargs):
+        headers = {
+            'X-Smtp2go-Api': 'smtp2go-python',
+            'X-Smtp2go-Api-Version': __version__
+        }
         payload = json.dumps({
             'api_key': self.api_key,
             'sender': sender,
@@ -49,7 +55,8 @@ class SMTP2Go:
             'subject': subject,
             'text_body': message
         })
-        response = requests.post(API_ROOT + ENDPOINT_SEND, data=payload)
+        response = requests.post(
+            API_ROOT + ENDPOINT_SEND, data=payload, headers=headers)
         return SMTP2GoResponse(response)
 
 
