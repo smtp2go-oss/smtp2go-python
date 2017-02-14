@@ -16,8 +16,13 @@ class SMTP2Go:
 
     Usage:
 
-    # Ensure API key environment variable is set:
-    s = SMTP2Go()
+    Ensure API key is set via either:
+
+    # Environment variable:
+    # $ export SMTP2GO_API_KEY=<Your API Key>
+
+    or passing it to the class' constructor:
+    s = SMTP2Go(api_key='<Your API Key')
 
     s.send(sender='goofy@clubhouse.com',
                   recipients=['mickey@clubhouse.com'],
@@ -29,8 +34,8 @@ class SMTP2Go:
     SMTP2GoResponse instance
     """
 
-    def __init__(self):
-        self.api_key = os.getenv('SMTP2GO_API_KEY', None)
+    def __init__(self, api_key=None):
+        self.api_key = os.getenv('SMTP2GO_API_KEY', api_key)
         if not self.api_key:
             raise SMTP2GoAPIKeyException(
                 'SMTP2Go requires SMTP2GO_API_KEY Environment Variable to be '
@@ -52,7 +57,15 @@ class SMTP2GoResponse:
     """
     Wrapper over requests.models.response to expose SMTP2Go
     specific data.
+
+    Atrtibutes:
+    - resp.json: JSON response from API call
+    - resp.success: Boolean indicating success of API call
+    - resp.errors: List of errors from API call
+    - resp.status_code: HTTP status code from API call
+    - resp.request_id: Request ID returned from API call
     """
+
     def __init__(self, response):
         self._response = response
         self.json = self.json()
@@ -75,7 +88,7 @@ class SMTP2GoResponse:
         """
         Gets errors from HTTP response
         """
-        errors = self.json.get('data').get('error')
+        errors = self.json.get('data').get('failures')
         if errors:
             logger.error(errors)
         return errors
