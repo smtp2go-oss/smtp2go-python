@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.org/smtp2go/smtp2go.api-python.svg?branch=master)](https://travis-ci.org/smtp2go/smtp2go.api-python)
 [![Code Climate](https://codeclimate.com/github/smtp2go/smtp2go.api-python/badges/gpa.svg)](https://codeclimate.com/github/smtp2go/smtp2go.api-python)
+[![Issue Count](https://codeclimate.com/github/smtp2go/smtp2go.api-python/badges/issue_count.svg)](https://codeclimate.com/github/smtp2go/smtp2go.api-python)
 
 # SMTP2Go API
 
