@@ -1,2 +1,5 @@
 Guardfile
 .python-version
+.cache/
+.coverage
+.pyirc
