@@ -3,5 +3,6 @@ Guardfile
 .cache/
 .coverage
 .pyirc
+build/
 dist/
 smtp2go.egg-info/
