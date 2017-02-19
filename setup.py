@@ -1,11 +1,11 @@
 from setuptools import setup
 
 setup(name='smtp2go',
-      version='0.0.1-alpha',
+      version='0.0.1',
       description='Library for interacting with the SMTP2Go API.',
       url='https://github.com/smtp2go/smtp2go.api-python',
       author='SMTP2Go',
-      author_email='smtp2go@david-bush.co.uk',
+      author_email='devs@smtp2go.com',
       license='MIT',
       packages=['smtp2go'],
       install_requires=[
