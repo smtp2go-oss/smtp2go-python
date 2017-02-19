@@ -6,7 +6,7 @@ import requests
 from smtp2go.settings import API_ROOT, ENDPOINT_SEND
 from smtp2go.exceptions import SMTP2GoAPIKeyException
 
-__version__ = '0.0.1-alpha'
+__version__ = '0.0.1'
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
