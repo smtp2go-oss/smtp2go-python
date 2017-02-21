@@ -14,12 +14,12 @@ setup(name='smtp2go',
           'requests'
       ],
       classifiers=[
-          "Development Status :: 5 - Production",
+          "Development Status :: 5 - Production/Stable",
           "Intended Audience :: Developers",
           "License :: OSI Approved :: MIT License",
           "Programming Language :: Python :: 2.7",
           "Programming Language :: Python :: 3",
-          "Topic :: Communications :: Email"
-          "Topic :: Software Development :: Libraries :: Python Modules"
+          "Topic :: Communications :: Email",
+          "Topic :: Software Development :: Libraries :: Python Modules",
       ],
       zip_safe=False)
