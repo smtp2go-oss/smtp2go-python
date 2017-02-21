@@ -25,7 +25,7 @@ Looking to integrate with [Django](https://www.djangoproject.com)? Try our [Djan
 
 Sign up for a free account [here](https://www.smtp2go.com/pricing) and get an API key. At your shell, run:
 
-    $ export API_KEY="<your_API_key>"
+    $ export SMTP2GO_API_KEY="<your_API_key>"
 
 Then sending mail is as simple as:
 
@@ -43,7 +43,7 @@ Full documentation can be found [here](https://apidoc.smtp2go.com/documentation/
 ## Changelog
 
 Version 1.0.0:
-- Out of alpha!
+- Out of alpha
 
 ## Development
 
