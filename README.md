@@ -2,9 +2,9 @@
 [![Code Climate](https://codeclimate.com/github/smtp2go-oss/smtp2go-python/badges/gpa.svg)](https://codeclimate.com/github/smtp2go-oss/smtp2go-python)
 [![Issue Count](https://codeclimate.com/github/smtp2go-oss/smtp2go-python/badges/issue_count.svg)](https://codeclimate.com/github/smtp2go-oss/smtp2go-python)
 
-# SMTP2Go API
+# smtp2go API
 
-Python wrapper over [SMTP2Go](https://www.smtp2go.com) API.
+Python wrapper over [smtp2go](https://www.smtp2go.com) API.
 
 ## Installation
 
