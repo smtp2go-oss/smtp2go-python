@@ -40,7 +40,7 @@ Then sending mail is as simple as:
                   subject='Trying out SMTP2Go',
                   message='Test message')
 
-Full documentation can be found [here](https://apidoc.smtp2go.com/documentation/#/README)
+Full API documentation can be found [here](https://apidoc.smtp2go.com/documentation/#/README)
 
 ## Changelog
 
