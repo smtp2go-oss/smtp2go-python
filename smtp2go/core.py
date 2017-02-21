@@ -6,7 +6,7 @@ import requests
 from smtp2go.settings import API_ROOT, ENDPOINT_SEND
 from smtp2go.exceptions import SMTP2GoAPIKeyException
 
-__version__ = '0.0.1'
+__version__ = '1.0.0'
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -36,12 +36,12 @@ class SMTP2Go:
     SMTP2GoResponse instance
     """
 
-    def __init__(self, api_key=None):
-        self.api_key = os.getenv('SMTP2GO_API_KEY', api_key)
+    def __init__(self):
+        self.api_key = os.getenv('SMTP2GO_API_KEY', None)
         if not self.api_key:
             raise SMTP2GoAPIKeyException(
                 'SMTP2Go requires SMTP2GO_API_KEY Environment Variable to be '
-                'set or api_key passed to the SMTP2Go constructor')
+                'set')
 
     def send(self, sender, recipients, subject, message, **kwargs):
         headers = {
