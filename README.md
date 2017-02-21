@@ -1,6 +1,6 @@
-[![Build Status](https://travis-ci.org/smtp2go/smtp2go.api-python.svg?branch=master)](https://travis-ci.org/smtp2go/smtp2go.api-python)
-[![Code Climate](https://codeclimate.com/github/smtp2go/smtp2go.api-python/badges/gpa.svg)](https://codeclimate.com/github/smtp2go/smtp2go.api-python)
-[![Issue Count](https://codeclimate.com/github/smtp2go/smtp2go.api-python/badges/issue_count.svg)](https://codeclimate.com/github/smtp2go/smtp2go.api-python)
+[![Build Status](https://travis-ci.org/smtp2go-oss/smtp2go-python.svg?branch=master)](https://travis-ci.org/smtp2go-oss/smtp2go-python)
+[![Code Climate](https://codeclimate.com/github/smtp2go-oss/smtp2go-python/badges/gpa.svg)](https://codeclimate.com/github/smtp2go-oss/smtp2go-python)
+[![Issue Count](https://codeclimate.com/github/smtp2go-oss/smtp2go-python/badges/issue_count.svg)](https://codeclimate.com/github/smtp2go-oss/smtp2go-python)
 
 # SMTP2Go API
 
@@ -15,6 +15,9 @@ Add this line to your application's requirements.txt:
 Or install it yourself with pip:
 
     $ pip install smtp2go
+
+
+Looking to integrate with [Django](https://www.djangoproject.com)? Try our [Django library](https://github.com/smtp2go-oss/smtp2go-django/).
 
 ## Usage
 
@@ -35,6 +38,10 @@ Then sending mail is as simple as:
 
 Full documentation can be found [here](https://apidoc.smtp2go.com/documentation/#/README)
 
+## Changelog
+
+Version 1.0.0:
+- Out of alpha!
 
 ## Development
 
