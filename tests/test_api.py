@@ -81,13 +81,9 @@ def test_no_environment_variable_raises_api_exception():
         SMTP2Go()  # Called without api_key in constructor
 
 
-def test_api_key_variable_in_constructor():
-    assert os.getenv('SMTP2GO_API_KEY') is None
-    SMTP2Go(api_key=TEST_API_KEY)
-
-
 @responses.activate
-def test_version_header_sent():
+def test_version_header_sent(monkeypatch):
+    monkeypatch.setenv('SMTP2GO_API_KEY', TEST_API_KEY)
     def test_headers_callback(request):
         assert request.headers.get('X-Smtp2go-Api')
         assert request.headers.get('X-Smtp2go-Api-Version')
@@ -100,5 +96,5 @@ def test_version_header_sent():
         responses.POST, API_ROOT + ENDPOINT_SEND,
         callback=test_headers_callback
     )
-    s = SMTP2Go(api_key=TEST_API_KEY)
+    s = SMTP2Go()
     s.send(**PAYLOAD)
