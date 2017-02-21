@@ -1,8 +1,8 @@
 [![Build Status](https://travis-ci.org/smtp2go-oss/smtp2go-python.svg?branch=master)](https://travis-ci.org/smtp2go-oss/smtp2go-python)
+[![Coverage Status](https://coveralls.io/repos/github/smtp2go-oss/smtp2go-python/badge.svg?branch=master)](https://coveralls.io/github/smtp2go-oss/smtp2go-python?branch=master)
 [![Dependency Status](https://gemnasium.com/badges/github.com/smtp2go-oss/smtp2go-python.svg)](https://gemnasium.com/github.com/smtp2go-oss/smtp2go-python)
 [![Code Climate](https://codeclimate.com/github/smtp2go-oss/smtp2go-python/badges/gpa.svg)](https://codeclimate.com/github/smtp2go-oss/smtp2go-python)
 [![Issue Count](https://codeclimate.com/github/smtp2go-oss/smtp2go-python/badges/issue_count.svg)](https://codeclimate.com/github/smtp2go-oss/smtp2go-python)
-[![Coverage Status](https://coveralls.io/repos/github/smtp2go-oss/smtp2go-python/badge.svg?branch=master)](https://coveralls.io/github/smtp2go-oss/smtp2go-python?branch=master)
 [![license](https://img.shields.io/github/license/smtp2go-oss/smtp2go-python.svg)]()
 
 # smtp2go API
