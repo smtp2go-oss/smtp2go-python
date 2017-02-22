@@ -53,7 +53,7 @@ Clone repo and install requirements into a virtualenv. Run tests with `pytest`.
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub [here](https://github.com/smtp2go/smtp2go.api-python)
+Bug reports and pull requests are welcome on GitHub [here](https://github.com/smtp2go-oss/smtp2go-python)
 
 ## License
 
