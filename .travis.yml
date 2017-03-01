@@ -1,12 +1,15 @@
 language: python
 python:
-  - "2.7"
-  - "3.4"
-  - "3.5"
-  - "3.6"
+- '2.7'
+- '3.4'
+- '3.5'
+- '3.6'
 install:
-  - pip install -r requirements.txt
-  - pip install .
+- pip install -r requirements.txt
+- pip install .
 script: pytest --cov=smtp2go tests/
 after_success:
-  - coveralls
+- coveralls
+notifications:
+  slack:
+    secure: rDpN3Cim+14ekT0CDerWA84bbfCnzpPZbRA61dFl0DDLNNLxUWqYKVPLEDQBR1nLFulK6/F1kLYEOsvf0ibybKmxZgU5AntF/1S/HrkdE0G4zSSQH3sLJi7T3SP+SHrsH9mb6/3/HEuclreAIpoYjLh2RUZbORR/E/XLV6DqNpNZ7ue17oZxRUX9DEiaoXGK6jvUZTiQPj5PT7+gStWtOUJBCI9hO3G4J19sB41MuZh2mK66NrjZjbAhZDPbSi50RPuyMKoQHzyJcclqUrTpD94lr73Itk/NqFKB9n6iFfGU8oSBVpnv/1uvgoXEreRnhKw6TlIN84t1Ci/JR8izSA4DWda3+WCVZeOtuJt31+PlhPHWkhmngf9MCgNSWxiSPSpzIEcEGiIJsxRD9OoY8V97LfYy2Zmx0KtNKMBlHduF/48I9i6xuCDwB2yZbPpUMf4IwDV1sK11D9vLG9e8reAESNQUHE2x/+XQqgjSIGz6fVnvoNAVCaNnR9VFXM9kSqwWhthdeYqRCNQ1l+U9YVwDsZSysGdqK4jj/SiMnAalca+o+mMlp0Zv4tevuw+dBUp59LfQEz3vaWtME0McH+CwV3H03LjExRIKPSpEodx3762KxWJeVaRDfSetVTLbf9bv2crSx6RwreJFWfl/XV8iKRz488ZsN1T32iju+GA=
