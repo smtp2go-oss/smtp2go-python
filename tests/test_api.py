@@ -78,7 +78,7 @@ def test_failed_endpoint_send(monkeypatch):
 def test_no_environment_variable_raises_api_exception():
     assert os.getenv('SMTP2GO_API_KEY') is None
     with pytest.raises(SMTP2GoAPIKeyException):
-        SMTP2Go()  # Called without api_key in constructor
+        SMTP2Go()
 
 
 @responses.activate
