@@ -1,6 +1,6 @@
 codeclimate-test-reporter==0.2.1
 cookies==2.2.1
-coverage==4.0.3
+coverage==4.3.3
 py==1.4.32
 pytest==3.0.6
 pytest-cov==2.4.0
