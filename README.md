@@ -44,6 +44,8 @@ Full API documentation can be found [here](https://apidoc.smtp2go.com/documentat
 
 ## Changelog
 
+Version 1.0.1:
+- Added ratelimiting attributes to response
 Version 1.0.0:
 - Out of alpha
 
