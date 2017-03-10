@@ -2,6 +2,7 @@ import json
 import logging
 import os
 import requests
+from collections import namedtuple
 
 from smtp2go.settings import API_ROOT, ENDPOINT_SEND
 from smtp2go.exceptions import SMTP2GoAPIKeyException
@@ -80,6 +81,7 @@ class SMTP2GoResponse:
         self.errors = self._get_errors()
         self.status_code = self._get_status_code()
         self.request_id = self._get_request_id()
+        self.rate_limit = self._get_rate_limit()
 
         logger.info('Success? {0}'.format(self.success))
         logger.info('Status Code: {0}'.format(self.status_code))
@@ -111,6 +113,15 @@ class SMTP2GoResponse:
         Gets HTTP request ID from HTTP response
         """
         return self.json.get('request_id')
+
+    def _get_rate_limit(self):
+        rate_limit = namedtuple('rate_limit', ['remaining', 'limit', 'reset'])
+        headers = self._response.headers
+        return rate_limit(
+            int(headers.get('x-ratelimit-remaining', 0)),
+            int(headers.get('x-ratelimit-limit', 0)),
+            int(headers.get('x-ratelimit-reset', 0))
+        )
 
     def json(self):
         """

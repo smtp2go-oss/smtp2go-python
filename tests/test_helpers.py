@@ -8,6 +8,12 @@ from smtp2go.settings import API_ROOT, ENDPOINT_SEND
 
 SEND_ENDPOINT = API_ROOT + ENDPOINT_SEND
 TEST_API_KEY = 'testapikey'
+HEADERS = {
+    'X-Ratelimit-Remaining': '250',
+    'X-Ratelimit-Limit': '250',
+    'X-Ratelimit-Reset': '37'
+}
+
 PAYLOAD = {
     'sender': 'dave@example.com',
     'recipients': ['matt@example.com'],
@@ -58,20 +64,21 @@ class EnvironmentVariable(object):
 
 
 @responses.activate
-def get_response(endpoint, successful=True, status_code=200):
+def get_response(endpoint, successful=True, status_code=200, headers=None):
     with EnvironmentVariable('SMTP2GO_API_KEY', TEST_API_KEY):
         # Mock out API Endpoint:
         body = SUCCESSFUL_RESPONSE_BODY if successful else FAILED_RESPONSE_BODY
-        responses.add(responses.POST, endpoint,
-                      json=body, status=status_code,
-                      content_type='application/json')
-        s = SMTP2Go()
-        response = s.send(**PAYLOAD)
+        responses.add(responses.POST, endpoint, json=body, status=status_code,
+                      content_type='application/json',
+                      adding_headers=headers)
+        client = SMTP2Go()
+        response = client.send(**PAYLOAD)
         return response
 
 
 get_successful_response = partial(
-    get_response, SEND_ENDPOINT, successful=True, status_code=200)
+    get_response, SEND_ENDPOINT, successful=True,
+    status_code=200, headers=HEADERS)
 get_failed_response = partial(
-    get_response, SEND_ENDPOINT, successful=False, status_code=400)
-
+    get_response, SEND_ENDPOINT, successful=False,
+    status_code=400, headers=HEADERS)
