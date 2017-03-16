@@ -64,15 +64,17 @@ class EnvironmentVariable(object):
 
 
 @responses.activate
-def get_response(endpoint, successful=True, status_code=200, headers=None):
+def get_response(endpoint, successful=True, status_code=200, headers=None, payload=None):
     with EnvironmentVariable('SMTP2GO_API_KEY', TEST_API_KEY):
+        if not payload:
+            payload = PAYLOAD
         # Mock out API Endpoint:
         body = SUCCESSFUL_RESPONSE_BODY if successful else FAILED_RESPONSE_BODY
         responses.add(responses.POST, endpoint, json=body, status=status_code,
                       content_type='application/json',
                       adding_headers=headers)
         client = SMTP2Go()
-        response = client.send(**PAYLOAD)
+        response = client.send(**payload)
         return response
 
 
