@@ -59,3 +59,33 @@ def test_version_header_sent(monkeypatch):
     )
     s = SMTP2Go()
     s.send(**PAYLOAD)
+
+
+@responses.activate
+def test_custom_headers_sent(monkeypatch):
+    monkeypatch.setenv('SMTP2GO_API_KEY', 'testapikey')
+    custom_header_key, custom_header_val = 'Test-Custom-Header', 'Test Value'
+
+    def test_headers_callback(request):
+        # Check all custom header keys are in request.headers:
+        assert custom_header_key in request.headers.keys()
+        assert custom_header_val in request.headers.values()
+
+        responses.add(responses.POST, API_ROOT + ENDPOINT_SEND,
+                      json=SUCCESSFUL_RESPONSE_BODY, status=200,
+                      content_type='application/json')
+        return (200, {}, json.dumps(SUCCESSFUL_RESPONSE_BODY))
+
+    responses.add_callback(
+        responses.POST, API_ROOT + ENDPOINT_SEND,
+        callback=test_headers_callback
+    )
+    s = SMTP2Go()
+    payload = PAYLOAD.copy()
+    payload['custom_headers'] = dict([(custom_header_key, custom_header_val)])
+    s.send(**payload)
+
+def test_empty_custom_headers():
+    payload = PAYLOAD.copy()
+    payload['headers'] = {}
+    get_successful_response(payload=payload)
