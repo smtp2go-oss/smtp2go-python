@@ -7,7 +7,7 @@ from collections import namedtuple
 from smtp2go.settings import API_ROOT, ENDPOINT_SEND
 from smtp2go.exceptions import SMTP2GoAPIKeyException
 
-__version__ = '1.0.1'
+__version__ = '1.2.0'
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
