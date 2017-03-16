@@ -35,15 +35,20 @@ Then sending mail is as simple as:
 
     s = SMTP2Go()
 
-    s.send(sender='dave@examples.com',
-                  recipients=['matt@example.com'],
-                  subject='Trying out smtp2go!',
-                  message='Test message')
+    s.send(
+        sender='dave@examples.com',
+        recipients=['matt@example.com'],
+        subject='Trying out smtp2go!',
+        message='Test message'
+        custom_headers={'Your-Custom-Headers': 'Custom Values'}
+    )
 
 Full API documentation can be found [here](https://apidoc.smtp2go.com/documentation/#/README)
 
 ## Changelog
 
+Version 1.2.0:
+- Added custom header sending functionality
 Version 1.0.1:
 - Added ratelimiting attributes to response
 Version 1.0.0:
