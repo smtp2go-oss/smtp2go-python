@@ -35,9 +35,9 @@ Then sending mail is as simple as:
 
     s = SMTP2Go()
 
-    s.send(sender='goofy@clubhouse.com',
-                  recipients=['mickey@clubhouse.com'],
-                  subject='Trying out SMTP2Go',
+    s.send(sender='dave@examples.com',
+                  recipients=['matt@example.com'],
+                  subject='Trying out smtp2go!',
                   message='Test message')
 
 Full API documentation can be found [here](https://apidoc.smtp2go.com/documentation/#/README)
