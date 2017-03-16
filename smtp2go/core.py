@@ -44,7 +44,8 @@ class SMTP2Go:
                 'SMTP2Go requires SMTP2GO_API_KEY Environment Variable to be '
                 'set')
 
-    def send(self, sender, recipients, subject, message, custom_headers=None, **kwargs):
+    def send(self, sender, recipients, subject, message,
+             custom_headers=None, **kwargs):
         headers = {
             'X-Smtp2go-Api': 'smtp2go-python',
             'X-Smtp2go-Api-Version': __version__

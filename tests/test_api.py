@@ -85,6 +85,7 @@ def test_custom_headers_sent(monkeypatch):
     payload['custom_headers'] = dict([(custom_header_key, custom_header_val)])
     s.send(**payload)
 
+
 def test_empty_custom_headers():
     payload = PAYLOAD.copy()
     payload['headers'] = {}

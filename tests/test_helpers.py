@@ -64,7 +64,8 @@ class EnvironmentVariable(object):
 
 
 @responses.activate
-def get_response(endpoint, successful=True, status_code=200, headers=None, payload=None):
+def get_response(endpoint, successful=True, status_code=200,
+                 headers=None, payload=None):
     with EnvironmentVariable('SMTP2GO_API_KEY', TEST_API_KEY):
         if not payload:
             payload = PAYLOAD
