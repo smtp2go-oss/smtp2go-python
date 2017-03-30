@@ -18,7 +18,8 @@ PAYLOAD = {
     'sender': 'dave@example.com',
     'recipients': ['matt@example.com'],
     'subject': 'Trying out SMTP2Go',
-    'message': 'Test message'
+    'text': 'Test message',
+    'html': '<html><body><p>Test Message</p></body></html>'
 }
 SUCCESSFUL_RESPONSE_BODY = {
     "request_id": "aa253464-0bd0-467a-b24b-6159dcd7be60",

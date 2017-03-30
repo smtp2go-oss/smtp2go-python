@@ -4,3 +4,7 @@ class SMTP2GoBaseException(Exception):
 
 class SMTP2GoAPIKeyException(SMTP2GoBaseException):
     pass
+
+
+class SMTP2GoParameterException(SMTP2GoBaseException):
+    pass

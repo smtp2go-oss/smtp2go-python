@@ -5,7 +5,7 @@ import requests
 from collections import namedtuple
 
 from smtp2go.settings import API_ROOT, ENDPOINT_SEND
-from smtp2go.exceptions import SMTP2GoAPIKeyException
+from smtp2go.exceptions import SMTP2GoAPIKeyException, SMTP2GoParameterException
 
 __version__ = '1.2.0'
 
@@ -30,7 +30,8 @@ class SMTP2Go:
     s.send(sender='goofy@clubhouse.com',
                   recipients=['mickey@clubhouse.com'],
                   subject='Trying out SMTP2Go',
-                  message='Test message')
+                  text ='Test message',
+                  html='<html><body><p>Test</p></body></html>')
 
     Returns:
 
@@ -44,12 +45,20 @@ class SMTP2Go:
                 'SMTP2Go requires SMTP2GO_API_KEY Environment Variable to be '
                 'set')
 
-    def send(self, sender, recipients, subject, message,
-             custom_headers=None, **kwargs):
+    def send(self, sender, recipients, subject, text=None,
+             html=None, custom_headers=None, **kwargs):
+
+        # Ensure that either html or text was passed:
+        if not any([text, html]):
+            raise SMTP2GoParameterException(
+                'send() requires text or html arguments.')
+
+        # TODO: Abstract this for readability
         headers = {
             'X-Smtp2go-Api': 'smtp2go-python',
             'X-Smtp2go-Api-Version': __version__
         }
+
         if custom_headers:
             # Don't overwrite our headers:
             custom_headers.update(headers)
@@ -60,7 +69,8 @@ class SMTP2Go:
             'sender': sender,
             'to': recipients,
             'subject': subject,
-            'text_body': message
+            'text_body': text,
+            'html_body': html
         })
         response = requests.post(
             API_ROOT + ENDPOINT_SEND, data=payload, headers=headers)

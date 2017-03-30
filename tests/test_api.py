@@ -3,7 +3,7 @@ import json
 import pytest
 import responses
 
-from smtp2go.exceptions import SMTP2GoAPIKeyException
+from smtp2go.exceptions import SMTP2GoAPIKeyException, SMTP2GoParameterException
 from smtp2go.settings import API_ROOT, ENDPOINT_SEND
 from smtp2go.core import SMTP2Go
 from tests.test_helpers import (
@@ -85,6 +85,27 @@ def test_custom_headers_sent(monkeypatch):
     payload['custom_headers'] = dict([(custom_header_key, custom_header_val)])
     s.send(**payload)
 
+
+def test_send_method_raises_exception_if_text_or_html_not_present():
+    payload = PAYLOAD.copy()
+    payload['html'] = payload['text'] = None
+    with pytest.raises(SMTP2GoParameterException):
+        get_successful_response(payload=payload)
+
+def test_send_method_does_not_raise_exception_if_text_present():
+    payload = PAYLOAD.copy()
+    payload['html'] = None
+    assert payload.get('text')
+    assert not payload.get('html')
+    get_successful_response(payload=payload)
+
+
+def test_send_method_does_not_raise_exception_if_html_present():
+    payload = PAYLOAD.copy()
+    payload['text'] = None
+    assert payload.get('html')
+    assert not payload.get('text')
+    get_successful_response(payload=payload)
 
 def test_empty_custom_headers():
     payload = PAYLOAD.copy()
