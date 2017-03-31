@@ -53,17 +53,7 @@ class SMTP2Go:
             raise SMTP2GoParameterException(
                 'send() requires text or html arguments.')
 
-        # TODO: Abstract this for readability
-        headers = {
-            'X-Smtp2go-Api': 'smtp2go-python',
-            'X-Smtp2go-Api-Version': __version__
-        }
-
-        if custom_headers:
-            # Don't overwrite our headers:
-            custom_headers.update(headers)
-            headers = custom_headers
-
+        headers = self._get_headers(custom_headers)
         payload = json.dumps({
             'api_key': self.api_key,
             'sender': sender,
@@ -72,9 +62,21 @@ class SMTP2Go:
             'text_body': text,
             'html_body': html
         })
+
         response = requests.post(
             API_ROOT + ENDPOINT_SEND, data=payload, headers=headers)
         return SMTP2GoResponse(response)
+
+    def _get_headers(self, custom_headers):
+        headers = {
+            'X-Smtp2go-Api': 'smtp2go-python',
+            'X-Smtp2go-Api-Version': __version__
+        }
+        if custom_headers:
+            # Don't overwrite our headers:
+            custom_headers.update(headers)
+            return custom_headers
+        return headers
 
 
 class SMTP2GoResponse:
