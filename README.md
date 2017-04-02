@@ -6,9 +6,9 @@
 [![Issue Count](https://codeclimate.com/github/smtp2go-oss/smtp2go-python/badges/issue_count.svg)](https://codeclimate.com/github/smtp2go-oss/smtp2go-python)
 [![license](https://img.shields.io/github/license/smtp2go-oss/smtp2go-python.svg)]()
 
-# smtp2go API
+# smtp2go
 
-Python wrapper over [smtp2go](https://www.smtp2go.com) API.
+Python library to facilitate interations with [smtp2go](https://www.smtp2go.com) API
 
 ## Installation
 
@@ -21,7 +21,7 @@ Or install it yourself with pip:
     $ pip install smtp2go
 
 
-Looking to integrate with [Django](https://www.djangoproject.com)? Try our [Django library](https://github.com/smtp2go-oss/smtp2go-django/).
+Looking to integrate with [Django](https://www.djangoproject.com)? Try our [Django library](https://github.com/smtp2go-oss/smtp2go-django/)
 
 ## Usage
 
@@ -29,30 +29,48 @@ Sign up for a free account [here](https://www.smtp2go.com/pricing) and get an AP
 
     $ export SMTP2GO_API_KEY="<your_API_key>"
 
-Then sending mail is as simple as:
+Here is a REPL session demonstrating sending an email and looking at the response:
 
-    from smtp2go.core import SMTP2Go
+    In [1]: from smtp2go.core import SMTP2Go
 
-    s = SMTP2Go()
+    In [2]: client = SMTP2Go()
 
-    s.send(
-        sender='dave@examples.com',
-        recipients=['matt@example.com'],
-        subject='Trying out smtp2go!',
-        message='Test message'
-        custom_headers={'Your-Custom-Headers': 'Custom Values'}
-    )
+    In [3]: payload = {
+       ...: 'sender': 'dave@example.com',
+       ...: 'recipients': ['matt@example.com'],
+       ...: 'subject': 'Trying out Smtp2go!',
+       ...: 'text': 'Test Message',
+       ...: 'html': '<html><body><h1>Test HTML message</h1></body><html>',
+       ...: 'custom_headers': {'Your-Custom-Headers': 'Custom Values'}}
+
+    In [4]: response = client.send(**payload)
+
+    In [5]: response.success
+    Out[5]: True
+
+    In [6]: response.json
+    Out[6]:
+    {'data': {'failed': 0, 'failures': [], 'succeeded': 1},
+     'request_id': '<redacted>'}
+
+    In [7]: response.errors
+    Out[7]: []
+
+    In [8]: response.rate_limit
+    Out[8]: rate_limit(remaining=250, limit=250, reset=16)
 
 Full API documentation can be found [here](https://apidoc.smtp2go.com/documentation/#/README)
 
 ## Changelog
 
-Version 1.2.0:
-- Added custom header sending functionality
-Version 1.0.1:
-- Added ratelimiting attributes to response
-Version 1.0.0:
-- Out of alpha
+- Version 2.0.0:
+  - Added HTML email functionality
+- Version 1.2.0:
+  - Added custom header sending functionality
+- Version 1.0.1:
+  - Added ratelimiting attributes to response
+- Version 1.0.0:
+  - Out of alpha
 
 ## Development
 
