@@ -2,7 +2,7 @@ import os
 import responses
 from functools import partial
 
-from smtp2go.core import SMTP2Go
+from smtp2go.core import Smtp2goClient
 from smtp2go.settings import API_ROOT, ENDPOINT_SEND
 
 
@@ -17,7 +17,7 @@ HEADERS = {
 PAYLOAD = {
     'sender': 'dave@example.com',
     'recipients': ['matt@example.com'],
-    'subject': 'Trying out SMTP2Go',
+    'subject': 'Trying out smtp2go',
     'text': 'Test message',
     'html': '<html><body><p>Test Message</p></body></html>'
 }
@@ -43,11 +43,13 @@ FAILED_RESPONSE_BODY = {
 }
 
 
-class EnvironmentVariable(object):
+class EnvironmentVariableContextManager():
     """
     Context manager for creating a temporary environment variable.
     """
     def __init__(self, key, value):
+        if not value:
+            value = ''
         self.key = key
         self.new_value = value
 
@@ -67,7 +69,7 @@ class EnvironmentVariable(object):
 @responses.activate
 def get_response(endpoint, successful=True, status_code=200,
                  headers=None, payload=None):
-    with EnvironmentVariable('SMTP2GO_API_KEY', TEST_API_KEY):
+    with EnvironmentVariableContextManager('SMTP2GO_API_KEY', TEST_API_KEY):
         if not payload:
             payload = PAYLOAD
         # Mock out API Endpoint:
@@ -75,7 +77,7 @@ def get_response(endpoint, successful=True, status_code=200,
         responses.add(responses.POST, endpoint, json=body, status=status_code,
                       content_type='application/json',
                       adding_headers=headers)
-        client = SMTP2Go()
+        client = Smtp2goClient()
         response = client.send(**payload)
         return response
 

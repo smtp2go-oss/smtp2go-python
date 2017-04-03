@@ -5,17 +5,20 @@ import requests
 from collections import namedtuple
 
 from smtp2go.settings import API_ROOT, ENDPOINT_SEND
-from smtp2go.exceptions import SMTP2GoAPIKeyException, SMTP2GoParameterException
+from smtp2go.exceptions import (
+    Smtp2goAPIKeyException,
+    Smtp2goParameterException
+)
 
-__version__ = '1.2.0'
+__version__ = '2.0.0'
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
-class SMTP2Go:
+class Smtp2goClient:
     """
-    Thin Python wrapper over SMTP2Go API.
+    Thin Python wrapper over Smtp2go API.
 
     Usage:
 
@@ -24,33 +27,36 @@ class SMTP2Go:
     # Environment variable:
     # $ export SMTP2GO_API_KEY=<Your API Key>
 
-    or passing it to the class' constructor:
-    s = SMTP2Go(api_key='<Your API Key')
-
-    s.send(sender='goofy@clubhouse.com',
-                  recipients=['mickey@clubhouse.com'],
-                  subject='Trying out SMTP2Go',
-                  text ='Test message',
-                  html='<html><body><p>Test</p></body></html>')
+    client = Smtp2goClient()
+    client.send(
+        sender='dave@example.com',
+        recipients=['matt@example.com'],
+        subject='Trying out smtp2go',
+        text ='Test message',
+        html='<html><body><p>Test HTML message</p></body></html>',
+        custom_headers={
+          'Your-Custom-Headers': 'Custom header values'
+        }
+    )
 
     Returns:
 
-    SMTP2GoResponse instance
+    Smtp2goResponse instance
     """
 
     def __init__(self):
         self.api_key = os.getenv('SMTP2GO_API_KEY', None)
         if not self.api_key:
-            raise SMTP2GoAPIKeyException(
-                'SMTP2Go requires SMTP2GO_API_KEY Environment Variable to be '
-                'set')
+            raise Smtp2goAPIKeyException(
+                'Smtp2goClient requires SMTP2GO_API_KEY Environment Variable '
+                'to be set')
 
     def send(self, sender, recipients, subject, text=None,
              html=None, custom_headers=None, **kwargs):
 
         # Ensure that either html or text was passed:
         if not any([text, html]):
-            raise SMTP2GoParameterException(
+            raise Smtp2goParameterException(
                 'send() requires text or html arguments.')
 
         headers = self._get_headers(custom_headers)
@@ -65,7 +71,7 @@ class SMTP2Go:
 
         response = requests.post(
             API_ROOT + ENDPOINT_SEND, data=payload, headers=headers)
-        return SMTP2GoResponse(response)
+        return Smtp2goResponse(response)
 
     def _get_headers(self, custom_headers):
         headers = {
@@ -79,9 +85,9 @@ class SMTP2Go:
         return headers
 
 
-class SMTP2GoResponse:
+class Smtp2goResponse:
     """
-    Wrapper over requests.models.response to expose SMTP2Go
+    Wrapper over requests.models.response to expose Smtp2go
     specific data.
 
     Atrtibutes:

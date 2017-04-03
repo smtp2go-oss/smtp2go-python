@@ -1,10 +1,10 @@
-class SMTP2GoBaseException(Exception):
+class Smtp2goBaseException(Exception):
     pass
 
 
-class SMTP2GoAPIKeyException(SMTP2GoBaseException):
+class Smtp2goAPIKeyException(Smtp2goBaseException):
     pass
 
 
-class SMTP2GoParameterException(SMTP2GoBaseException):
+class Smtp2goParameterException(Smtp2goBaseException):
     pass

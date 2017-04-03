@@ -3,10 +3,14 @@ import json
 import pytest
 import responses
 
-from smtp2go.exceptions import SMTP2GoAPIKeyException, SMTP2GoParameterException
+from smtp2go.exceptions import (
+    Smtp2goAPIKeyException,
+    Smtp2goParameterException
+)
 from smtp2go.settings import API_ROOT, ENDPOINT_SEND
-from smtp2go.core import SMTP2Go
+from smtp2go.core import Smtp2goClient
 from tests.test_helpers import (
+    EnvironmentVariableContextManager,
     get_failed_response,
     get_successful_response,
     PAYLOAD,
@@ -36,9 +40,9 @@ def test_failed_endpoint_send():
 
 
 def test_no_environment_variable_raises_api_exception():
-    assert os.getenv('SMTP2GO_API_KEY') is None
-    with pytest.raises(SMTP2GoAPIKeyException):
-        SMTP2Go()
+    with EnvironmentVariableContextManager('SMTP2GO_API_KEY', None):
+        with pytest.raises(Smtp2goAPIKeyException):
+            Smtp2goClient()
 
 
 @responses.activate
@@ -57,7 +61,7 @@ def test_version_header_sent(monkeypatch):
         responses.POST, API_ROOT + ENDPOINT_SEND,
         callback=test_headers_callback
     )
-    s = SMTP2Go()
+    s = Smtp2goClient()
     s.send(**PAYLOAD)
 
 
@@ -80,7 +84,7 @@ def test_custom_headers_sent(monkeypatch):
         responses.POST, API_ROOT + ENDPOINT_SEND,
         callback=test_headers_callback
     )
-    s = SMTP2Go()
+    s = Smtp2goClient()
     payload = PAYLOAD.copy()
     payload['custom_headers'] = dict([(custom_header_key, custom_header_val)])
     s.send(**payload)
@@ -89,8 +93,9 @@ def test_custom_headers_sent(monkeypatch):
 def test_send_method_raises_exception_if_text_or_html_not_present():
     payload = PAYLOAD.copy()
     payload['html'] = payload['text'] = None
-    with pytest.raises(SMTP2GoParameterException):
+    with pytest.raises(Smtp2goParameterException):
         get_successful_response(payload=payload)
+
 
 def test_send_method_does_not_raise_exception_if_text_present():
     payload = PAYLOAD.copy()
@@ -106,6 +111,7 @@ def test_send_method_does_not_raise_exception_if_html_present():
     assert payload.get('html')
     assert not payload.get('text')
     get_successful_response(payload=payload)
+
 
 def test_empty_custom_headers():
     payload = PAYLOAD.copy()

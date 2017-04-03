@@ -29,11 +29,11 @@ Sign up for a free account [here](https://www.smtp2go.com/pricing) and get an AP
 
     $ export SMTP2GO_API_KEY="<your_API_key>"
 
-Here is a REPL session demonstrating sending an email and looking at the response:
+Here is a REPL session demonstrating sending an email and viewing the response:
 
-    In [1]: from smtp2go.core import SMTP2Go
+    In [1]: from smtp2go.core import Smtp2goClient
 
-    In [2]: client = SMTP2Go()
+    In [2]: client = Smtp2goClient()
 
     In [3]: payload = {
        ...: 'sender': 'dave@example.com',
