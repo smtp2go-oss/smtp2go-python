@@ -44,13 +44,12 @@ class Smtp2goClient:
     Smtp2goResponse instance
     """
 
-    def __init__(self, api_key=None): 
+    def __init__(self, api_key=None):
 	self.api_key = api_key or os.getenv('SMTP2GO_API_KEY', None)
         if not self.api_key:
             raise Smtp2goAPIKeyException(
-                'Smtp2goClient requires the api_key to be set.'
-		'Either set via environment variable \'SMTP2GO_API_KEY\''
-                'or define Smtp2goClient(api_key)')
+                'Smtp2goClient requires api_key as SMTP2GO_API_KEY Environment Variable to be set'
+                )
 
     def send(self, sender, recipients, subject, text=None,
              html=None, custom_headers=None, **kwargs):
