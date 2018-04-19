@@ -1,11 +1,10 @@
 codeclimate-test-reporter==0.2.3
 cookies==2.2.1
-coverage==4.4.1
-py==1.4.34
-pytest==3.2.0
+coverage==4.5.1
+pytest==3.5.0
 pytest-cov==2.5.1
 python-coveralls==2.9.1
 PyYAML==3.12
-requests==2.18.3
-responses==0.6.1
-six==1.10.0
+requests==2.18.4
+responses==0.9.1
+six==1.11.0
