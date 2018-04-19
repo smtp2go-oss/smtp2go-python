@@ -45,6 +45,25 @@ def test_no_environment_variable_raises_api_exception():
 
 
 @responses.activate
+def test_environment_variable_can_be_passed_into_constructor():
+    test_api_key = 'constructor-api-key'
+    client = Smtp2goClient(api_key=test_api_key)
+    assert client.api_key == test_api_key
+    responses.add(responses.POST, API_ROOT + ENDPOINT_SEND,
+                  json=SUCCESSFUL_RESPONSE_BODY, status=200,
+                  content_type='application/json')
+    response = client.send(**PAYLOAD)
+    assert response.success is True
+    assert response.json == SUCCESSFUL_RESPONSE_BODY
+    assert response.status_code == 200
+    assert not response.errors
+    assert response.errors == SUCCESSFUL_RESPONSE_BODY.get(
+        'data').get('failures')
+    # Check api key hasn't been altered:
+    assert client.api_key == test_api_key
+
+
+@responses.activate
 def test_version_header_sent(monkeypatch):
     monkeypatch.setenv('SMTP2GO_API_KEY', 'testapikey')
 
