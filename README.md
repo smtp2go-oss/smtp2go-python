@@ -8,7 +8,7 @@
 
 # smtp2go
 
-Python library to facilitate interations with [smtp2go](https://www.smtp2go.com) API
+Python library to facilitate interactions with [smtp2go](https://www.smtp2go.com) API
 
 ## Installation
 
