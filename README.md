@@ -29,6 +29,10 @@ Sign up for a free account [here](https://www.smtp2go.com/pricing) and get an AP
 
     $ export SMTP2GO_API_KEY="<your_API_key>"
 
+Or alternatively, pass your API key to the Smtp2goClient initialiser:
+
+    smtp2go_client = Smtp2goClient(api_key='<your_API_key>')
+
 Here is a REPL session demonstrating sending an email and viewing the response:
 
     In [1]: from smtp2go.core import Smtp2goClient
@@ -63,6 +67,9 @@ Full API documentation can be found [here](https://apidoc.smtp2go.com/documentat
 
 ## Changelog
 
+- Version 2.1.0:
+  - Allowed API key to be passed to `Smtp2goClient`'s initialiser.
+  - Added [pipenv](https://docs.pipenv.org).
 - Version 2.0.0:
   - Added HTML email functionality
 - Version 1.2.0:
@@ -74,7 +81,9 @@ Full API documentation can be found [here](https://apidoc.smtp2go.com/documentat
 
 ## Development
 
-Clone repo and install requirements into a virtualenv. Run tests with `pytest`.
+Clone repo and install `requirements.txt` into a virtualenv. Run tests with `pytest`.
+
+Also we've included pipenv, so you can just `cd` into the directory and `pipenv shell`
 
 ## Contributing
 

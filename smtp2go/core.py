@@ -10,7 +10,7 @@ from smtp2go.exceptions import (
     Smtp2goParameterException
 )
 
-__version__ = '2.0.0'
+__version__ = '2.1.0'
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
