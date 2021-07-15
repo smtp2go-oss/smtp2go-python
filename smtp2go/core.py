@@ -34,6 +34,10 @@ class Smtp2goClient:
         subject='Trying out smtp2go',
         text ='Test message',
         html='<html><body><p>Test HTML message</p></body></html>',
+        template_id='8832556',
+        template_data={
+          'template_variable': 'variableValue'
+        },
         custom_headers={
           'Your-Custom-Headers': 'Custom header values'
         }
@@ -51,13 +55,17 @@ class Smtp2goClient:
                 'Smtp2goClient requires api_key as SMTP2GO_API_KEY Environment Variable to be set'
                 )
 
-    def send(self, sender, recipients, subject, text=None,
-            html=None, custom_headers=None, **kwargs):
+    def send(self, sender, recipients, subject=None, text=None,
+            html=None, template_id=None, template_data=None, custom_headers=None, **kwargs):
 
         # Ensure that either html or text was passed:
-        if not any([text, html]):
+        if not any([text, html, template_id]):
             raise Smtp2goParameterException(
-                'send() requires text or html arguments.')
+                'send() requires text, html or template_id arguments.')
+
+        if not template_id and not subject:
+            raise Smtp2goParameterException(
+                'send() requires template_id or subject arguments.')
 
         headers = self._get_headers(custom_headers)
         payload = json.dumps({
@@ -66,7 +74,9 @@ class Smtp2goClient:
             'to': recipients,
             'subject': subject,
             'text_body': text,
-            'html_body': html
+            'html_body': html,
+            'template_id': template_id,
+            'template_data': template_data
         })
 
         response = requests.post(
