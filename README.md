@@ -67,6 +67,8 @@ Full API documentation can be found [here](https://apidoc.smtp2go.com/documentat
 
 ## Changelog
 
+- Version 2.2.0:
+  - Adding the ability to send using templates.
 - Version 2.1.0:
   - Allowed API key to be passed to `Smtp2goClient`'s initialiser.
   - Added [pipenv](https://docs.pipenv.org).
