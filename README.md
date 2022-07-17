@@ -67,6 +67,8 @@ Full API documentation can be found [here](https://apidoc.smtp2go.com/documentat
 
 ## Changelog
 
+- Version 2.3.0:
+  - Fixed the adding of custom headers to emails.
 - Version 2.2.0:
   - Adding the ability to send using templates.
 - Version 2.1.0:

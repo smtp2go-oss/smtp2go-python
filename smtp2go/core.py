@@ -10,7 +10,7 @@ from smtp2go.exceptions import (
     Smtp2goParameterException
 )
 
-__version__ = '2.2.0'
+__version__ = '2.3.0'
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -76,7 +76,11 @@ class Smtp2goClient:
             'text_body': text,
             'html_body': html,
             'template_id': template_id,
-            'template_data': template_data
+            'template_data': template_data,
+            'custom_headers': [{
+                'header': header,
+                'value': custom_headers[header]
+            } for header in custom_headers]
         })
 
         response = requests.post(
