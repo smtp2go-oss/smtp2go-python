@@ -10,7 +10,7 @@ from smtp2go.exceptions import (
     Smtp2goParameterException
 )
 
-__version__ = '2.3.0'
+__version__ = '2.3.1'
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -56,7 +56,7 @@ class Smtp2goClient:
                 )
 
     def send(self, sender, recipients, subject=None, text=None,
-            html=None, template_id=None, template_data=None, custom_headers=None, **kwargs):
+            html=None, template_id=None, template_data=None, custom_headers={}, **kwargs):
 
         # Ensure that either html or text was passed:
         if not any([text, html, template_id]):
