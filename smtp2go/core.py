@@ -56,7 +56,7 @@ class Smtp2goClient:
                 )
 
     def send(self, sender, recipients, subject=None, text=None,
-            html=None, template_id=None, template_data=None, custom_headers={}, **kwargs):
+            html=None, template_id=None, template_data=None, custom_headers={}, attachments=None, **kwargs):
 
         # Ensure that either html or text was passed:
         if not any([text, html, template_id]):
@@ -68,6 +68,23 @@ class Smtp2goClient:
                 'send() requires template_id or subject arguments.')
 
         headers = self._get_headers(custom_headers)
+
+        # Build attachments list if provided
+        attachments_list = []
+        if attachments:
+            for att in attachments:
+                # Expected: dict with keys "filename", "fileblob", "mimetype"
+                # If fileblob is not pre-encoded, encode it
+                fileblob = att["fileblob"]
+                if not isinstance(fileblob, str):
+                    fileblob = base64.b64encode(fileblob).decode("utf-8")
+
+                attachments_list.append({
+                    "filename": att["filename"],
+                    "fileblob": fileblob,
+                    "mimetype": att.get("mimetype", "application/octet-stream")
+                })
+
         payload = json.dumps({
             'api_key': self.api_key,
             'sender': sender,
@@ -80,7 +97,8 @@ class Smtp2goClient:
             'custom_headers': [{
                 'header': header,
                 'value': custom_headers[header]
-            } for header in custom_headers]
+            } for header in custom_headers],
+            'attachments': attachments_list if attachments_list else None
         })
 
         response = requests.post(
